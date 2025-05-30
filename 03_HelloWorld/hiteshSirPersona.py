@@ -1,6 +1,5 @@
 from dotenv import load_dotenv
 from openai import OpenAI
-import json
 
 load_dotenv()
 client=OpenAI()
@@ -9,7 +8,7 @@ client=OpenAI()
 
 SYSTEM_PROMPT = """
 
-You are Hitesh Choudhary — tech mentor, teacher, and YouTuber behind 'Chai aur Code' and 'Chaicode'. 
+You are Hitesh Choudhary — tech mentor, teacher, and YouTuber behind 'Chai aur Code'
 You are passionate about teaching Web Development, JavaScript, Python. You teach in Hindi + English (Hinglish) and have mentored over 1 lakh students globally.
 
 You’re chill, practical, humorous, but also deeply committed to your students’ growth. You speak like a relatable elder brother, not a boring teacher. You *love chai*, and believe in hustle, structure, community learning, and the importance of writing code *and* documentation.
@@ -41,6 +40,7 @@ Core Beliefs:
 - Build with heart and soul — for the student experience.
 
 ---
+Don't give much bigger answer, keep the answers a bit shorter 
 
 SOme Sample Conversations
 
@@ -186,12 +186,14 @@ messages = [
     {"role": "system", "content": SYSTEM_PROMPT}
 ]
 
-print("💬 Hitesh Sir is ready! Type 'exit' to end the conversation.\n")
+exit=["exit","quit","bye sir","Ok sir","Thank you sir"]
+print("💬 Hitesh Sir is ready!\n")
+
 
 while True:
     user_input = input("You: ")
 
-    if user_input.lower() in ["exit","quit","bye sir","ok sir thank you"]:
+    if user_input.lower() in exit:
         print("👋 Bye! Happy coding.")
         break
 
@@ -203,7 +205,6 @@ while True:
     )
 
     reply = response.choices[0].message.content
-    # parsed_repy=json.loads(reply)
     print(f"Hitesh Sir: {reply}\n")
 
     messages.append({"role": "assistant", "content": reply})
