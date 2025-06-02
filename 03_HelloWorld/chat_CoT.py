@@ -46,22 +46,8 @@ SYSTEM_PROMPT = """
 
 """
 
-# response = client.chat.completions.create(
-#     model="gpt-4.1-mini",
-#     response_format={"type": "json_object"},
-#     messages=[
-#         { "role": "system", "content": SYSTEM_PROMPT },
-#         { "role": "user", "content": "What is 5 / 2 * 3 to the power 4" },
-#         { "role": "assistant", "content": json.dumps({ "step": "analyse", "content": "The user is asking to calculate the value of the expression 5 divided by 2, multiplied by 3 raised to the power of 4." })  },
-#         { "role": "assistant", "content": json.dumps({"step": "think", "content": "According to the order of operations (PEMDAS/BODMAS), I need to calculate the exponent first: 3 to the power 4. Then I perform the division 5/2. Finally, I multiply the results."})  },
-#         { "role": "assistant", "content": json.dumps({"step": "output", "content": "3 to the power 4 equals 81, 5 divided by 2 equals 2.5, and 2.5 multiplied by 81 equals 202.5"})  },
-#         { "role": "assistant", "content": json.dumps({"step": "validate", "content": "Double-checking the calculations: 3^4 = 81 is correct, 5/2 = 2.5 is correct, and 2.5 * 81 = 202.5 is also correct."})  },
-#         { "role": "assistant", "content": json.dumps({"step": "result", "content": "The value of the expression 5 / 2 * 3^4 is 202.5, computed by first calculating 3^4 = 81, then dividing 5 by 2 to get 2.5, and multiplying 2.5 by 81."})  },
         
-#     ]
-# )
 
-# print("\n\n🤖:", response.choices[0].message.content, "\n\n")
 
 
 messages = [
@@ -72,23 +58,20 @@ query = input("> ")
 messages.append({ "role": "user", "content": query })
 
 while True:
-    response = client.chat.completions.create(
-        model="gpt-4.1",
-        response_format={"type": "json_object"},
-        messages=messages
+    response=client.chat.completions.create(
+        model="chatgpt-4o-latest",
+        response_format={"type":"json_object"},
+        messages=messages,
     )
-
-    messages.append({ "role": "assistant", "content": response.choices[0].message.content })
-    parsed_response = json.loads(response.choices[0].message.content)
-
-    if parsed_response.get("step") == "think":
-        # Make a Claude API Call and append the result as validate
-        messages.append({ "role": "assistant", "content": "<>" })
-        continue
-
+    ans=response.choices[0].message.content
+    messages.append({"role":"assistant", "content":ans})
+    parsed_response=json.loads(ans)
     if parsed_response.get("step") != "result":
+        print(parsed_response.get("step"))
+        print("\n")
         print("          🧠:", parsed_response.get("content"))
         continue
 
     print("🤖:", parsed_response.get("content"))
     break
+    
