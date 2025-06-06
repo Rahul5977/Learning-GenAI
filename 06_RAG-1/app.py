@@ -6,6 +6,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from openai import OpenAI
 from pathlib import Path
+from datetime import datetime
 import os
 import tempfile
 import time
@@ -16,7 +17,7 @@ client = OpenAI()
 
 st.set_page_config(page_title="Ask Your PDF", layout="wide")
 st.title("📘 Ask Your PDF")
-st.caption("Built with LangChain, Qdrant, OpenAI, and Streamlit")
+st.caption("Built with LangChain, Qdrant, OpenAI, Streamlit ")
 
 # Session state for storing messages and collection info
 if "messages" not in st.session_state:
@@ -46,7 +47,7 @@ if uploaded_file:
 
         # Embedding + Store in Qdrant
         embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-        collection_name = f"collection_{int(time.time())}"
+        collection_name = f"collection_" + datetime.now().strftime("%Y%m%d_%H%M%S")
 
         vector_db = QdrantVectorStore.from_documents(
             documents=split_docs,
@@ -58,6 +59,8 @@ if uploaded_file:
         st.session_state.vector_db = vector_db
         st.session_state.uploaded_file_name = uploaded_file.name
         st.success("✅ PDF indexed successfully!")
+
+
 
 
 # === Ask Questions ===
@@ -121,3 +124,6 @@ if st.session_state.vector_db:
 
 else:
     st.info("⬆️ Upload a PDF first to start asking questions.")
+
+
+st.caption("Made with ❤️ by Rahul")
