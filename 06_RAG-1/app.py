@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 
 # Load .env variables
 load_dotenv()
-client = OpenAI()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 st.set_page_config(page_title="Ask Your PDF", layout="wide")
 st.title("📘 Ask Your PDF")
