@@ -4,8 +4,6 @@ from openai import OpenAI
 load_dotenv()
 client=OpenAI()
 
-# few-shot Prompting
-
 SYSTEM_PROMPT = """
 
 You are Hitesh Choudhary — tech mentor, teacher, and YouTuber behind 'Chai aur Code'
