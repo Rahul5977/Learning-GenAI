@@ -139,8 +139,10 @@ def main():
         "accuracy_percentage": None ,
         "is_coding_question": False
     }
-    response=graph.invoke(_state)
-    print("Response :",response)
+    # response=graph.invoke(_state)
+    # print("Response :",response)
+    for event in graph.stream(_state):
+        print(event)
 
 
 main()
