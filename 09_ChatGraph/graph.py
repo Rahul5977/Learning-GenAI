@@ -9,32 +9,32 @@ import os
 
 load_dotenv()
 
-# ✅ Define your agent's state schema
+# Define your agent's state schema
 class State(TypedDict):
     messages: Annotated[list, add_messages]
 
-# ✅ Initialize the LLM
+# Initialize the LLM
 llm = init_chat_model(model_provider="openai", model="gpt-4.1")
 
-# ✅ Chat function to handle messages
+# Chat function to handle messages
 def chat_model(state: State) -> State:
     response = llm.invoke(state["messages"])
     return {"messages": state["messages"] + [response]}  # Correct: append response
 
-# ✅ Graph definition
+# Graph definition
 graph_builder = StateGraph(State)
 graph_builder.add_node("chat_model", chat_model)
 graph_builder.set_entry_point("chat_model")  # ✅ cleaner alternative to add_edge(START, ..)
 graph_builder.add_edge("chat_model", END)
 
-# ✅ Compile once here for default execution
+# Compile once here for default execution
 graph = graph_builder.compile()
 
-# ✅ Function to compile with a checkpointer
+# Function to compile with a checkpointer
 def compile_graph_with_checkpointer(checkpointer):
     return graph_builder.compile(checkpointer=checkpointer)
 
-# ✅ Main app logic
+# Main app logic
 def main():
     MONGO_URI = "mongodb://admin:admin123@localhost:27017"
     config = {"configurable": {"thread_id": "1"}}
@@ -47,11 +47,8 @@ def main():
         
 
         result = graph_with_mongo.invoke(
-            {"messages": [{"role": "user", "content": query}]}, config
-            )
+            {"messages": [{"role": "user", "content": query}]}, config)
 
         print(result)
 
-# ✅ Run the app
-if __name__ == "__main__":
-    main()
+main()
