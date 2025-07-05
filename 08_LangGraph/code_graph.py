@@ -108,8 +108,6 @@ def coding_validate_query(state:State):
 
     state["accuracy_percentage"] = response.choices[0].message.parsed.accuracy_percentage
     return state
-    
-    pass
 
 graph_builder=StateGraph(State)
 

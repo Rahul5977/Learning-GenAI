@@ -55,7 +55,7 @@ def create_chat_graph(checkpointer):
     return graph_builder.compile(checkpointer=checkpointer)
 
 
-def main():
+def user_side():
     MONGO_URI = "mongodb://admin:admin123@localhost:27017"
     config = {"configurable": {"thread_id": "21"}}
     with MongoDBSaver.from_conn_string(MONGO_URI) as mongo_checkpointer:
@@ -70,7 +70,7 @@ def main():
                     event["messages"][-1].pretty_print()
 
     
-main()
+user_side()
 def admin_side():
     DB_URI = "mongodb://admin:admin@mongodb:27017"
     config = {"configurable": {"thread_id": "21"}}
@@ -102,3 +102,4 @@ def admin_side():
         for event in graph_with_cp.stream(resume_command, config, stream_mode="values"):
             if "messages" in event:
                 event["messages"][-1].pretty_print()
+                
