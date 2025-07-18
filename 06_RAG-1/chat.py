@@ -9,8 +9,8 @@ client = OpenAI()
 embedding_model = OpenAIEmbeddings(model="text-embedding-3-large")
 
 vector_db = QdrantVectorStore.from_existing_collection(
-    url="http://localhost:6333",
-    collection_name="learning_vectors",
+    url="http://vector-db:6333",
+    collection_name="AI-Crash-Report",
     embedding=embedding_model
 )
 
