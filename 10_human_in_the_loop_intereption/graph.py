@@ -2,7 +2,7 @@ from typing_extensions import TypedDict
 from typing import Annotated
 from langgraph.graph.message import add_messages
 from langchain.chat_models import init_chat_model
-from langgraph.graph import StateGraph, START, END
+from langgraph.graph import StateGraph, START
 from dotenv import load_dotenv
 from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode, tools_condition

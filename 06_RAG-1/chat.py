@@ -14,10 +14,12 @@ vector_db = QdrantVectorStore.from_existing_collection(
     embedding=embedding_model
 )
 
-BASE_SYSTEM_PROMPT = """
-You are a helpful AI assistant who answers user queries based on the provided context from a PDF file.
-Always refer the user to the appropriate page number to find more details. Do not answer anything outside the context.
-"""
+BASE_SYSTEM_PROMPT = (
+    "You are a helpful AI assistant who answers user queries based on the "
+    "provided context from a PDF file.\n"
+    "Always refer the user to the appropriate page number to find more details"
+    "Do not answer anything outside the context."
+)
 
 print("🤖 Ask your questions based on the uploaded PDF. Type 'exit' to quit.\n")
 
@@ -41,11 +43,13 @@ while True:
         ])
 
         # Inject context into system prompt (replaced version for current turn)
-        system_prompt_with_context = BASE_SYSTEM_PROMPT + f"\n\nContext:\n{context}"
-        
-        #override system prompt by prepending again
-        turn_messages = [{"role": "system", "content": system_prompt_with_context}] + messages[1:]
-        
+        system_prompt_with_context = BASE_SYSTEM_PROMPT + \
+            f"\n\nContext:\n{context}"
+
+        # override system prompt by prepending again
+        turn_messages = [
+            {"role": "system", "content": system_prompt_with_context}] + messages[1:]
+
         # Add user message
         turn_messages.append({"role": "user", "content": query})
 
