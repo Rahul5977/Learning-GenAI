@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st # type: ignore
 from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter

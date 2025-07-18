@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query
-from .src.connection import queue 
-from .src.worker import proecess_query
+from src.connection import queue 
+from src.worker import proecess_query
 app = FastAPI()
 
 @app.get("/")

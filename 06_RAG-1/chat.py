@@ -49,13 +49,12 @@ while True:
         # override system prompt by prepending again
         turn_messages = [
             {"role": "system", "content": system_prompt_with_context}] + messages[1:]
-
         # Add user message
         turn_messages.append({"role": "user", "content": query})
 
         # Get response
         chat_completion = client.chat.completions.create(
-            model="gpt-4.1",
+            model="gpt-4.1-mini",
             messages=turn_messages
         )
 

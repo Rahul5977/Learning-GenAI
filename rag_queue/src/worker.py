@@ -1,2 +1,2 @@
-def proecess_query(query):
+async def proecess_query(query):   
     pass
